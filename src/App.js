@@ -10,7 +10,7 @@ class App extends React.Component{
     super(props)
 
     this.state = {
-      bookList: ['book1', 'book2'],
+      bookList: [],
       searchInput: 'fish'
     }
   }
@@ -31,8 +31,10 @@ class App extends React.Component{
       .then(data => {
         console.log(data);
         this.setState({
-          bookList: data.items
+          bookList: data.items,
+          error: null
         })
+        // console.log(`inside state:`, this.state.bookList)
       })
       .catch(err => {
         console.log('Handling the error here.', err);
