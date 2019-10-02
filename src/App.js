@@ -1,26 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Search from './Search/search'
+import BookList from './BookList/booklist'
+
+class App extends React.Component{
+  constructor(props){
+    super(props)
+
+    this.state = {
+      bookList: ['book1', 'book2'],
+      searchInput: 'fish'
+    }
+  }
+
+  componentDidMount(){
+    const myKey="AIzaSyA9mL1cPz2iM3NVrgqO-Dl_8Bal4H3WV-o";
+    const url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchInput}&key=${myKey}`;
+
+    fetch(url)
+      .then(response => {
+        if(!response.ok) {
+          console.log('An error occured. Let\'s throw an error.');
+          throw new Error('Something went wrong')
+        }
+        return response
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          bookList: data.items
+        })
+      })
+      .catch(err => {
+        console.log('Handling the error here.', err);
+        this.setState({
+          error: err.message
+        })
+      })
+  }
+  render(){
+    return (
+      <div className="App">
+        <h1>Google Book Search</h1>
+        <Search />
+        <BookList bookList={this.state.bookList} />
+      </div>
+    );
+
+  }
+
 }
 
 export default App;
