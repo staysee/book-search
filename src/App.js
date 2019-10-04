@@ -9,7 +9,7 @@ class App extends React.Component{
     super(props)
     this.state = {
       bookList: [],
-      searchTerm: 'javascript',
+      searchTerm: '',
       printType: 'All',
       bookType: 'No Filter'
       
@@ -22,11 +22,7 @@ class App extends React.Component{
     })
   }
 
-  handleSearch(){
-    console.log('searching')
-  }
-
-  componentDidMount(){
+  handleSearch = term => {
     const myKey=process.env.REACT_APP_API_KEY;
     const url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}&key=${myKey}`;
 
