@@ -7,15 +7,15 @@ import BookList from './BookList/booklist'
 class App extends React.Component{
   constructor(props){
     super(props)
-
     this.state = {
-      bookList: ['book1', 'book2'],
-      searchInput: 'fish'
+      bookList: [],
+      searchInput: 'henry'
     }
   }
+  
 
   componentDidMount(){
-    const myKey="AIzaSyA9mL1cPz2iM3NVrgqO-Dl_8Bal4H3WV-o";
+    const myKey=process.env.REACT_APP_API_KEY;
     const url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchInput}&key=${myKey}`;
 
     fetch(url)
@@ -30,7 +30,8 @@ class App extends React.Component{
       .then(data => {
         console.log(data);
         this.setState({
-          bookList: data.items
+          bookList: data.items,
+          error: null
         })
       })
       .catch(err => {
