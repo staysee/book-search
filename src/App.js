@@ -9,14 +9,26 @@ class App extends React.Component{
     super(props)
     this.state = {
       bookList: [],
-      searchInput: 'henry'
+      searchTerm: 'javascript',
+      printType: 'All',
+      bookType: 'No Filter'
+      
     }
   }
   
+  updateSearchTerm(term){
+    this.setState({
+      searchTerm: term
+    })
+  }
+
+  handleSearch(){
+    console.log('searching')
+  }
 
   componentDidMount(){
     const myKey=process.env.REACT_APP_API_KEY;
-    const url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchInput}&key=${myKey}`;
+    const url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}&key=${myKey}`;
 
     fetch(url)
       .then(response => {
@@ -45,8 +57,13 @@ class App extends React.Component{
     return (
       <div className="App">
         <h1>Google Book Search</h1>
-        <Search />
-        <BookList bookList={this.state.bookList} />
+        <Search 
+          searchTerm={this.state.searchTerm}
+          handleUpdate={term=>this.updateSearchTerm(term)}
+          handleSearch={this.handleSearch} />
+        <BookList 
+          bookList={this.state.bookList}
+          searchTerm={this.state.searchTerm} />
       </div>
     );
 

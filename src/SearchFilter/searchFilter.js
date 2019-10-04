@@ -11,6 +11,8 @@ class SearchFilter extends React.Component{
                         id="print-type"
                         name="print-type">
                         <option value="All">All</option>
+                        <option value="Books">Books</option>
+                        <option value="Magazines">Magazines</option>
 
                     </select>
 

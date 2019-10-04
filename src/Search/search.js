@@ -8,7 +8,10 @@ class Search extends React.Component{
     render() {
         return(
             <div className="Search">
-                <SearchBar />
+                <SearchBar
+                    searchTerm={this.props.searchTerm}
+                    handleUpdate={this.props.handleUpdate}
+                    handleSearch={this.props.handleSearch} />
                 <SearchFilter />
             </div>
         )
