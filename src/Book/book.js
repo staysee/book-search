@@ -6,8 +6,10 @@ class Book extends React.Component{
 
         const { volumeInfo, saleInfo } = this.props;
 
-        const multipleAuthors = (authors) =>{
-            if (authors.length <= 2){
+        const formatAuthors = (authors) =>{
+            if (authors.length === 1){
+                authors = authors[0]
+            } else if (authors.length <= 2){
                 authors = authors.join(' and ');
             } else if (authors.length > 2){
                 let lastAuthor = ' and ' + authors.slice(-1)
@@ -25,7 +27,7 @@ class Book extends React.Component{
                 src={volumeInfo.imageLinks.thumbnail}
                 alt='book'/>
                 <h2>{volumeInfo.title}</h2>
-                <p>Author: {volumeInfo.authors.length === 1 ? `${volumeInfo.authors[0]}` : multipleAuthors(volumeInfo.authors)}</p>
+                <p>{volumeInfo.authors ? `Author: ${formatAuthors(volumeInfo.authors)}` : ``}</p>
                 <p>Price: {saleInfo.listPrice ? `$${saleInfo.listPrice.amount}` : `Not for sale`}</p>
                 <p>{volumeInfo.description}</p>
             </div>

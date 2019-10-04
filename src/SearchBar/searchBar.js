@@ -2,16 +2,12 @@ import React from 'react'
 import './searchBar.css'
 
 class SearchBar extends React.Component{
-    onSubmitForm = (e) => {
-        e.preventDefault()
-        this.props.handleSearch(e.target.value)
-    }
     render(){
         return(
             <div className="search-bar">
                 <form 
                     className="search-bar__form"
-                    onSubmit={this.onSubmitForm}>
+                    onSubmit={this.props.handleSubmit}>
                     <label htmlFor="search">Search</label>
                     <input 
                         type="text"

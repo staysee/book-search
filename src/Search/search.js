@@ -11,7 +11,7 @@ class Search extends React.Component{
                 <SearchBar
                     searchTerm={this.props.searchTerm}
                     handleUpdate={this.props.handleUpdate}
-                    handleSearch={this.props.handleSearch} />
+                    handleSubmit={this.props.handleSubmit} />
                 <SearchFilter />
             </div>
         )

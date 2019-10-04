@@ -10,7 +10,7 @@ class App extends React.Component{
     this.state = {
       bookList: [],
       searchTerm: '',
-      printType: 'All',
+      printType: 'magazines',
       bookType: 'No Filter'
       
     }
@@ -22,11 +22,22 @@ class App extends React.Component{
     })
   }
 
-  handleSearch = term => {
-    const myKey=process.env.REACT_APP_API_KEY;
-    const url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}&key=${myKey}`;
+  // comonentDidMount(){
+  //   this.handleSubmit();
+  // }
 
-    fetch(url)
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const myKey=process.env.REACT_APP_API_KEY;
+    const baseURL='https://www.googleapis.com/books/v1/volumes';
+    const query = `${this.state.searchTerm}`
+    const printType=`${this.state.printType}`
+
+
+    const queryString = `${baseURL}?q=${query}&printType=${printType}&key=${myKey}`;
+
+    fetch(queryString)
       .then(response => {
         if(!response.ok) {
           console.log('An error occured. Let\'s throw an error.');
@@ -36,11 +47,15 @@ class App extends React.Component{
       })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        this.setState({
-          bookList: data.items,
-          error: null
-        })
+        if (data){
+          console.log(data);
+            this.setState({
+              bookList: data.items,
+              error: null
+            })
+        } else {
+          console.log('no search results')
+        }
       })
       .catch(err => {
         console.log('Handling the error here.', err);
@@ -56,7 +71,8 @@ class App extends React.Component{
         <Search 
           searchTerm={this.state.searchTerm}
           handleUpdate={term=>this.updateSearchTerm(term)}
-          handleSearch={this.handleSearch} />
+          handleSubmit={this.handleSubmit}
+           />
         <BookList 
           bookList={this.state.bookList}
           searchTerm={this.state.searchTerm} />
