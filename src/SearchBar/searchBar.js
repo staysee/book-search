@@ -1,27 +1,21 @@
 import React from 'react'
 import './searchBar.css'
 
-class SearchBar extends React.Component{
-    render(){
+import SearchBox from '../SearchBox/searchBox'
+import SearchFilter from '../SearchFilter/searchFilter'
+
+class Search extends React.Component{
+    render() {
         return(
-            <div className="search-bar">
-                <form 
-                    className="search-bar__form"
-                    onSubmit={this.props.handleSubmit}>
-                    <label htmlFor="search">Search</label>
-                    <input 
-                        type="text"
-                        name="search"
-                        id="search"
-                        placeholder="Search"
-                        value={this.props.searchTerm}
-                        onChange={e => this.props.handleUpdate(e.target.value)} />
-                    
-                    <button type="submit">Search</button>
-                </form>
+            <div className="Search">
+                <SearchBox
+                    searchTerm={this.props.searchTerm}
+                    handleUpdate={this.props.handleUpdate}
+                    handleSubmit={this.props.handleSubmit}
+                    onChangePrintType={this.props.onChangePrintType} />
+                <SearchFilter />
             </div>
         )
     }
 }
-
-export default SearchBar
+export default Search

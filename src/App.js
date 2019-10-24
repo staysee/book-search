@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import Search from './Search/search'
+import SearchBar from './SearchBar/searchBar'
 import BookList from './BookList/booklist'
 
 class App extends React.Component{
@@ -10,9 +10,8 @@ class App extends React.Component{
     this.state = {
       bookList: [],
       searchTerm: '',
-      printType: 'magazines',
-      bookType: 'No Filter'
-      
+      printType: 'all',
+      bookType: ''
     }
   }
   
@@ -20,6 +19,20 @@ class App extends React.Component{
     this.setState({
       searchTerm: term
     })
+  }
+
+  changePrintType = type => {
+    this.setState({
+      printType: type
+    })
+    this.handleSubmit()
+  }
+
+  changBookType = type => {
+    this.setState({
+      bookType: type
+    })
+    this.handleSubmit()
   }
 
   // comonentDidMount(){
@@ -31,11 +44,12 @@ class App extends React.Component{
 
     const myKey=process.env.REACT_APP_API_KEY;
     const baseURL='https://www.googleapis.com/books/v1/volumes';
-    const query = `${this.state.searchTerm}`
-    const printType=`${this.state.printType}`
+    const searchTerm = `${this.state.searchTerm}`;
+    const printType =`${this.state.printType}`;
+    const bookType = this.state.bookType.length ? `${this.state.bookType}` : '';
 
 
-    const queryString = `${baseURL}?q=${query}&printType=${printType}&key=${myKey}`;
+    const queryString = `${baseURL}?q=${searchTerm}&printType=${printType}&key=${myKey}`;
 
     fetch(queryString)
       .then(response => {
@@ -68,10 +82,14 @@ class App extends React.Component{
     return (
       <div className="App">
         <h1>Google Book Search</h1>
-        <Search 
+        <SearchBar
           searchTerm={this.state.searchTerm}
           handleUpdate={term=>this.updateSearchTerm(term)}
           handleSubmit={this.handleSubmit}
+          printType={this.state.printType}
+          bookType={this.state.bookType}
+          onChangePrintType={type => this.changePrintType(type)}
+          onChangeBookType={type => this.ChangeBookType(type)}
            />
         <BookList 
           bookList={this.state.bookList}
