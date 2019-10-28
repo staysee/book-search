@@ -9,49 +9,60 @@ class App extends React.Component{
     super(props)
     this.state = {
       bookList: [],
-      searchTerm: '',
-      printType: 'all',
+      searchTerm: 'henry',
+      printType: '',
       bookType: ''
     }
   }
   
+
   updateSearchTerm(term){
     this.setState({
       searchTerm: term
     })
   }
 
-  changePrintType = type => {
+  updatePrintType(printType){
     this.setState({
-      printType: type
+      printType: printType
     })
-    this.handleSubmit()
   }
 
-  changBookType = type => {
+  updateBookType(bookType){
     this.setState({
-      bookType: type
+      bookType: bookType
     })
-    this.handleSubmit()
   }
 
-  // comonentDidMount(){
-  //   this.handleSubmit();
-  // }
-
-  handleSubmit = event => {
-    event.preventDefault();
+  
+  handleSubmit(e){
+    e.preventDefault();
 
     const myKey=process.env.REACT_APP_API_KEY;
     const baseURL='https://www.googleapis.com/books/v1/volumes';
     const searchTerm = `${this.state.searchTerm}`;
-    const printType =`${this.state.printType}`;
-    const bookType = this.state.bookType.length ? `${this.state.bookType}` : '';
+    const printType = this.state.printType.length ? `&printType=${this.state.printType}` : '';
+    const bookType = this.state.bookType.length  ? `&filter=${this.state.bookType}` : '';
 
 
-    const queryString = `${baseURL}?q=${searchTerm}&printType=${printType}&key=${myKey}`;
+    let url = `${baseURL}?q=${searchTerm}${printType}${bookType}&key=${myKey}`;
+    
+    if (this.state.printType.length > 0 ){
+      url = `${url}&printType=${this.state.printType}`;
+    }
 
-    fetch(queryString)
+    if (this.state.bookType.length > 0){
+      url = `${url}&filter=${this.state.bookType}`;
+    }
+
+    const options ={
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+
+    fetch(url, options)
       .then(response => {
         if(!response.ok) {
           console.log('An error occured. Let\'s throw an error.');
@@ -78,22 +89,19 @@ class App extends React.Component{
         })
       })
   }
+
   render(){
     return (
       <div className="App">
         <h1>Google Book Search</h1>
         <SearchBar
-          searchTerm={this.state.searchTerm}
-          handleUpdate={term=>this.updateSearchTerm(term)}
-          handleSubmit={this.handleSubmit}
-          printType={this.state.printType}
-          bookType={this.state.bookType}
-          onChangePrintType={type => this.changePrintType(type)}
-          onChangeBookType={type => this.ChangeBookType(type)}
+          updateSearchTerm={term => this.updateSearchTerm(term)}
+          updatePrintType={type => this.updatePrintType(type)}
+          updateBookType={type => this.updateBookType(type)}
+          handleSubmit={event =>this.handleSubmit(event)}
            />
         <BookList 
-          bookList={this.state.bookList}
-          searchTerm={this.state.searchTerm} />
+          bookList={this.state.bookList} />
       </div>
     );
 
