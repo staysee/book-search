@@ -22,14 +22,19 @@ class Book extends React.Component{
 
         return(
             <div className="book">
-                <img 
-                className='book-images' 
-                src={volumeInfo.imageLinks.thumbnail}
-                alt='book'/>
-                <h2>{volumeInfo.title}</h2>
-                <p>{volumeInfo.authors ? `Author: ${formatAuthors(volumeInfo.authors)}` : ``}</p>
-                <p>Price: {saleInfo.listPrice ? `$${saleInfo.listPrice.amount}` : `Not for sale`}</p>
-                <p>{volumeInfo.description}</p>
+                <div className="book-image-container">
+                    <img 
+                        className='book-image' 
+                        src={volumeInfo.imageLinks.thumbnail}
+                        alt='book'/>
+                </div>
+                
+                <div className="book-info">
+                    <h2>{volumeInfo.title}</h2>
+                    <p>{volumeInfo.authors ? `Author: ${formatAuthors(volumeInfo.authors)}` : ``}</p>
+                    <p>Price: {saleInfo.listPrice ? `$${saleInfo.listPrice.amount}` : `Not for sale`}</p>
+                    <p>{volumeInfo.description}</p>
+                </div>
             </div>
         )
     }

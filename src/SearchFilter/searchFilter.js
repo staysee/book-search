@@ -3,9 +3,9 @@ import './searchFilter.css'
 
 function SearchFilter(props){
     return(
-        <div className="search-filter">
-            <form className="search-filter__form">
-                <label htmlFor="printtype_options">Print Type:</label>
+        <div className="SearchFilter">
+            <form className="SearchFilter__form">
+                <label htmlFor="printtype_options">Print Type: </label>
                 <select
                     id="printtype_options"
                     name="printtype_options"
@@ -17,7 +17,7 @@ function SearchFilter(props){
 
                 </select>
 
-                <label htmlFor="booktype_options">Book Type:</label>
+                <label htmlFor="booktype_options">Book Type: </label>
                 <select
                     id="book-type"
                     name="book-type"

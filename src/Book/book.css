@@ -1,0 +1,18 @@
+.book {
+    display: flex;
+}
+.book-image-container {
+    position: relative;
+    width: 15%;
+    height: auto;
+    border-bottom: 2px solid gray;
+}
+
+.book-image {
+    margin-top: 20px;
+}
+
+.book-info {
+    width: 80%;
+    border-bottom: 2px solid gray;
+}

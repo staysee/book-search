@@ -7,7 +7,7 @@ import SearchFilter from '../SearchFilter/searchFilter'
 class SearchBar extends React.Component{
     render() {
         return(
-            <div className="Search">
+            <div className="SearchBar">
                 <SearchBox
                     updateSearchTerm={this.props.updateSearchTerm}
                     handleSubmit={this.props.handleSubmit} />

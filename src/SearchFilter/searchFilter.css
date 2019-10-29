@@ -1,0 +1,14 @@
+.SearchFilter{
+    background-color: #dedede
+}
+
+.SearchFilter__form {
+    padding: 10px 0;
+}
+
+.SearchFilter__form label {
+    margin-left: 20px;
+}
+.SearchFilter__form select {
+    padding: 5px;
+}

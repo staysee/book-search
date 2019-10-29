@@ -3,11 +3,11 @@ import './searchBox.css'
 
 function SearchBox(props){
     return(
-        <div className="search-box">
+        <div className="SearchBox">
             <form 
-                className="search-box__form"
+                className="SearchBox__form"
                 onSubmit={props.handleSubmit}>
-                <label htmlFor="search">Search</label>
+                <label htmlFor="search">Search: </label>
                 <input 
                     type="text"
                     name="search"
